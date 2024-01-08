@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/task")
+@RequestMapping("/api")
 public class TaskController {
     private final TaskService taskService;
 

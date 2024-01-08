@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -12,6 +13,7 @@ import javax.persistence.Entity;
 @Entity(name="task")
 public class TaskEntity extends MutableUuidEntity {
     private String content;
+    private LocalDate registerDate;
 }
 
 
