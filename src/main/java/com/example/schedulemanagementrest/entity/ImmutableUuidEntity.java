@@ -12,9 +12,10 @@ import java.time.Instant;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract  class ImmutableUuidEntity extends UuidEntity{
+public abstract class ImmutableUuidEntity extends UuidEntity{
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(updatable = false)
-    private @Getter
-    @CreatedDate Instant createdAt;
+    @Getter
+    @CreatedDate
+    private Instant createdAt;
 }

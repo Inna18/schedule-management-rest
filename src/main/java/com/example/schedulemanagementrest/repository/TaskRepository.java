@@ -10,7 +10,7 @@ import java.util.UUID;
 @Repository
 public interface TaskRepository extends JpaRepository<TaskEntity, UUID> {
     TaskEntity getTaskEntityById(UUID id);
-    List<TaskEntity> findAll();
+    List<TaskEntity> findAllByOrderByCreatedAtDesc();
     TaskEntity save(TaskEntity entity);
     void deleteById(UUID id);
 }
