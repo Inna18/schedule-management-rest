@@ -20,7 +20,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskEntity> getAll() {
-        return taskRepository.findAllByOrderByCreatedAtAsc();
+        return taskRepository.findAllByOrderByCreatedAtDesc();
     }
 
     @Override
