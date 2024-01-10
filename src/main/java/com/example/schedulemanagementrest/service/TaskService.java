@@ -1,14 +1,16 @@
 package com.example.schedulemanagementrest.service;
 
-import com.example.schedulemanagementrest.entity.TaskEntity;
+import com.example.schedulemanagementrest.domain.entity.TaskEntity;
+import com.example.schedulemanagementrest.domain.request.TaskRequest;
+import com.example.schedulemanagementrest.domain.response.TaskResponse;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface TaskService {
-    TaskEntity get(UUID id);
-    List<TaskEntity> getAll();
-    TaskEntity create(TaskEntity entity);
-    TaskEntity update(UUID id, String content);
-    void delete(UUID id);
+    TaskResponse get(UUID id);
+    List<TaskResponse> getAll();
+    TaskResponse create(TaskRequest request);
+    TaskResponse update(UUID id, String content);
+    boolean delete(UUID id);
 }

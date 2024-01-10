@@ -1,5 +1,6 @@
-package com.example.schedulemanagementrest.entity;
+package com.example.schedulemanagementrest.domain.entity;
 
+import com.example.schedulemanagementrest.domain.MutableUuidEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package com.example.schedulemanagementrest.repository;
 
-import com.example.schedulemanagementrest.entity.TaskEntity;
+import com.example.schedulemanagementrest.domain.entity.TaskEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

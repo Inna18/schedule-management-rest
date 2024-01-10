@@ -1,4 +1,4 @@
-package com.example.schedulemanagementrest.entity;
+package com.example.schedulemanagementrest.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

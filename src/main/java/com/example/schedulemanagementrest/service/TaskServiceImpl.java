@@ -1,10 +1,13 @@
 package com.example.schedulemanagementrest.service;
 
-import com.example.schedulemanagementrest.entity.TaskEntity;
+import com.example.schedulemanagementrest.domain.entity.TaskEntity;
+import com.example.schedulemanagementrest.domain.request.TaskRequest;
+import com.example.schedulemanagementrest.domain.response.TaskResponse;
 import com.example.schedulemanagementrest.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,29 +17,57 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
 
     @Override
-    public TaskEntity get(UUID id) {
-        return taskRepository.getTaskEntityById(id);
+    public TaskResponse get(UUID id) {
+        return mapEntityToResponse(taskRepository.getTaskEntityById(id));
     }
 
     @Override
-    public List<TaskEntity> getAll() {
-        return taskRepository.findAllByOrderByCreatedAtDesc();
+    public List<TaskResponse> getAll() {
+        List<TaskEntity> entities = taskRepository.findAllByOrderByCreatedAtDesc();
+        List<TaskResponse> responses = new ArrayList<>();
+        entities.forEach(e -> {
+            TaskResponse response = mapEntityToResponse(e);
+            responses.add(response);
+        });
+        return responses;
     }
 
     @Override
-    public TaskEntity create(TaskEntity entity) {
-        return taskRepository.save(entity);
+    public TaskResponse create(TaskRequest request) {
+        TaskEntity entity = mapRequestToEntity(request);
+        return mapEntityToResponse(taskRepository.save(entity));
     }
 
     @Override
-    public TaskEntity update(UUID id, String content) {
-        TaskEntity foundEntity = get(id);
+    public TaskResponse update(UUID id, String content) {
+        TaskEntity foundEntity = taskRepository.getTaskEntityById(id);
         foundEntity.setContent(content);
-        return taskRepository.save(foundEntity);
+        return mapEntityToResponse(taskRepository.save(foundEntity));
     }
 
     @Override
-    public void delete(UUID id) {
-        taskRepository.deleteById(id);
+    public boolean delete(UUID id) {
+        try {
+            taskRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
+
+    private TaskResponse mapEntityToResponse(TaskEntity entity) {
+        TaskResponse response = new TaskResponse();
+        response.setId(entity.getId());
+        response.setContent(entity.getContent());
+        response.setRegisterDate(entity.getRegisterDate());
+        return response;
+    }
+
+    private TaskEntity mapRequestToEntity(TaskRequest request) {
+        TaskEntity entity = new TaskEntity();
+        entity.setContent(request.getContent());
+        entity.setRegisterDate(request.getRegisterDate());
+        return entity;
+    }
+
 }

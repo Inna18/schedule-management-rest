@@ -1,41 +1,44 @@
 package com.example.schedulemanagementrest.controller;
 
-import com.example.schedulemanagementrest.entity.TaskEntity;
+import com.example.schedulemanagementrest.domain.request.TaskRequest;
+import com.example.schedulemanagementrest.domain.response.ApiSuccessResponse;
+import com.example.schedulemanagementrest.domain.response.TaskResponse;
 import com.example.schedulemanagementrest.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.Callable;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-public class TaskController {
+public class TaskController extends BaseController {
     private final TaskService taskService;
 
     @GetMapping("/tasks/{id}")
-    public TaskEntity get(@PathVariable  UUID id) {
-        return taskService.get(id);
+    public Callable<ApiSuccessResponse<TaskResponse>> get(@PathVariable  UUID id) {
+        return () -> wrap(taskService.get(id));
     }
 
     @GetMapping("/tasks")
-    public List<TaskEntity> getAll() {
-        return taskService.getAll();
+    public Callable<ApiSuccessResponse<List<TaskResponse>>> getAll() {
+        return () -> wrap(taskService.getAll());
     }
 
     @PostMapping("/tasks")
-    public TaskEntity create(@RequestBody TaskEntity entity) {
-        return taskService.create(entity);
+    public Callable<ApiSuccessResponse<TaskResponse>> create(@RequestBody TaskRequest request) {
+        return () -> wrap(taskService.create(request));
     }
 
     @PatchMapping("/tasks/{id}")
-    public TaskEntity update(@PathVariable UUID id, @RequestParam String content) {
-        return taskService.update(id, content);
+    public Callable<ApiSuccessResponse<TaskResponse>> update(@PathVariable UUID id, @RequestParam String content) {
+        return () -> wrap(taskService.update(id, content));
     }
 
     @DeleteMapping("/tasks/{id}")
-    public void delete(@PathVariable UUID id) {
-        taskService.delete(id);
+    public Callable<ApiSuccessResponse<Boolean>> delete(@PathVariable UUID id) {
+        return () -> wrap(taskService.delete(id));
     }
 }
