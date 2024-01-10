@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url:
+    username:
+    password:
+  jpa:
+    properties:
+      hibernate:
+        default_schema: public
+  servlet:
+    multipart:
+      location:
+
+front:
+  cloud: https://schedule-management.co.kr
+
+image:
+  path: https://api.schedule-management.co.kr/schedule-management
