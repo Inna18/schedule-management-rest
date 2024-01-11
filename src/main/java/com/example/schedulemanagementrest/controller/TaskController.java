@@ -1,5 +1,6 @@
 package com.example.schedulemanagementrest.controller;
 
+import com.example.schedulemanagementrest.domain.request.TaskContentRequest;
 import com.example.schedulemanagementrest.domain.request.TaskRequest;
 import com.example.schedulemanagementrest.domain.response.ApiSuccessResponse;
 import com.example.schedulemanagementrest.domain.response.TaskResponse;
@@ -33,8 +34,8 @@ public class TaskController extends BaseController {
     }
 
     @PatchMapping("/tasks/{id}")
-    public Callable<ApiSuccessResponse<TaskResponse>> update(@PathVariable UUID id, @RequestParam String content) {
-        return () -> wrap(taskService.update(id, content));
+    public Callable<ApiSuccessResponse<TaskResponse>> update(@PathVariable UUID id, @RequestBody TaskContentRequest request) {
+        return () -> wrap(taskService.update(id, request));
     }
 
     @DeleteMapping("/tasks/{id}")

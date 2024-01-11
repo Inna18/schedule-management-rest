@@ -1,6 +1,7 @@
 package com.example.schedulemanagementrest.service;
 
 import com.example.schedulemanagementrest.domain.entity.TaskEntity;
+import com.example.schedulemanagementrest.domain.request.TaskContentRequest;
 import com.example.schedulemanagementrest.domain.request.TaskRequest;
 import com.example.schedulemanagementrest.domain.response.TaskResponse;
 import com.example.schedulemanagementrest.repository.TaskRepository;
@@ -39,9 +40,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskResponse update(UUID id, String content) {
+    public TaskResponse update(UUID id, TaskContentRequest request) {
         TaskEntity foundEntity = taskRepository.getTaskEntityById(id);
-        foundEntity.setContent(content);
+        foundEntity.setContent(request.getContent());
         return mapEntityToResponse(taskRepository.save(foundEntity));
     }
 
