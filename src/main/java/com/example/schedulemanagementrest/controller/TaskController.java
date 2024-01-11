@@ -6,8 +6,10 @@ import com.example.schedulemanagementrest.domain.response.ApiSuccessResponse;
 import com.example.schedulemanagementrest.domain.response.TaskResponse;
 import com.example.schedulemanagementrest.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Callable;
@@ -24,8 +26,9 @@ public class TaskController extends BaseController {
     }
 
     @GetMapping("/tasks")
-    public Callable<ApiSuccessResponse<List<TaskResponse>>> getAll() {
-        return () -> wrap(taskService.getAll());
+    public Callable<ApiSuccessResponse<List<TaskResponse>>> getAll(@RequestParam(required = false) LocalDate start,
+                                                                   @RequestParam(required = false) LocalDate end) {
+        return () -> wrap(taskService.getAll(start, end));
     }
 
     @PostMapping("/tasks")

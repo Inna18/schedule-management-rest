@@ -8,6 +8,7 @@ import com.example.schedulemanagementrest.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -23,8 +24,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskResponse> getAll() {
-        List<TaskEntity> entities = taskRepository.findAllByOrderByCreatedAtDesc();
+    public List<TaskResponse> getAll(LocalDate start, LocalDate end) {
+        List<TaskEntity> entities = taskRepository.findAllByRegisterDateBetweenOrderByRegisterDateAsc(start, end);
         List<TaskResponse> responses = new ArrayList<>();
         entities.forEach(e -> {
             TaskResponse response = mapEntityToResponse(e);
